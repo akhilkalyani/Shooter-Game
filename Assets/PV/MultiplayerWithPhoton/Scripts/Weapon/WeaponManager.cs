@@ -44,6 +44,7 @@ namespace PV.Multiplayer
 
                 // Reduce the attack delay timer.
                 _attackDelay -= Time.deltaTime;
+                Input.attack = false;
             }
             else if (_attackDelay > 0f)
             {

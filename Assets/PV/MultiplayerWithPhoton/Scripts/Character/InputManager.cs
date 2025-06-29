@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace PV.Multiplayer
 {
@@ -7,7 +9,9 @@ namespace PV.Multiplayer
     {
         // Singleton instance to provide a single global access point for InputManager.
         public static InputManager Instance;
-
+        public FixedJoystick joystick;
+        public Button jumpBtn;
+        public Button shootBtn;
         // Public variables to hold player input data, accessible to other scripts.
         public Vector2 move; // Movement vector (uses WASD and Arrow keys).
         public Vector2 look; // Look input (mouse / touch pointer).
@@ -22,6 +26,18 @@ namespace PV.Multiplayer
             // Initialize the singleton instance and create a new InputActions object.
             Instance = this;
             _inputActions = new();
+            jumpBtn.onClick.AddListener(OnJump);
+            shootBtn.onClick.AddListener(OnShoot);
+        }
+
+        private void OnShoot()
+        {
+            attack = true;
+        }
+
+        private void OnJump()
+        {
+            jump = true;
         }
 
         private void OnEnable()
@@ -31,38 +47,22 @@ namespace PV.Multiplayer
 
         private void Start()
         {
-            // Subscribing to input action events for different player controls.
-            // Handle Movement input
-            _inputActions.Player.Move.performed += OnMove;
-            _inputActions.Player.Move.canceled += OnMove;
-
-            // Handle Look (Mouse/Touch) input
+            // // Handle Look (Mouse/Touch) input
             _inputActions.Player.Look.performed += OnLook;
             _inputActions.Player.Look.canceled += OnLook;
-
-            // Handle jump input: true when performed, false when canceled.
-            _inputActions.Player.Jump.performed += c => jump = true;
-            _inputActions.Player.Jump.canceled += c => jump = false;
 
             // Handle aim input: true when performed, false when canceled.
             _inputActions.Player.Aim.performed += c => isAiming = true;
             _inputActions.Player.Aim.canceled += c => isAiming = false;
-
-            // Handle attack input: true when performed, false when canceled.
-            _inputActions.Player.Attack.performed += c => attack = true;
-            _inputActions.Player.Attack.canceled += c => attack = false;
         }
-
+        void Update()
+        {
+            move = new Vector2(joystick.Horizontal, joystick.Vertical);
+        }
         private void OnLook(InputAction.CallbackContext context)
         {
             // Read the look input
             look = context.ReadValue<Vector2>();
-        }
-
-        private void OnMove(InputAction.CallbackContext ctx)
-        {
-            // Read the movement input
-            move = ctx.ReadValue<Vector2>();
         }
 
         private void OnDisable()

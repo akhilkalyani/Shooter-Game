@@ -6,13 +6,13 @@ namespace PV.Multiplayer
     {
         [Header("Movement")]
         [Tooltip("Speed of player when moving.")]
-        public float moveSpeed = 10;
+        public float moveSpeed = 1.5f;
 
         [Tooltip("How fast the player turns to face move direction.")]
-        public float rotationSmoothRate = 15;
+        public float rotationSmoothRate = 2.5f;
 
         [Tooltip("How fast the player changes speed.")]
-        public float speedChangeRate = 10;
+        public float speedChangeRate = 1.5f;
 
         [Header("Jump")]
         [Tooltip("If the player is jumping right now.")]
@@ -115,6 +115,7 @@ namespace PV.Multiplayer
 
         private void HandleRotation()
         {
+            if (Input.move != Vector2.zero) return;
             // Calculate the player's facing direction based on the camera.
             _targetDirection = _cameraTransform.forward;
             _targetDirection.Normalize();
@@ -159,6 +160,7 @@ namespace PV.Multiplayer
 
                     // Apply jump velocity to the Rigidbody.
                     _rigid.velocity = _verticalVelocity;
+                    Input.jump = false;
                 }
             }
             else

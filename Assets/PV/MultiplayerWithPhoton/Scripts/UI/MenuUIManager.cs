@@ -63,7 +63,7 @@ namespace PV.Multiplayer
         private readonly float _toggleDelay = 1f; // Time to wait before toggling the ready status.
         private float _lastToggleTime = 0f; // The last time we toggle the ready status.
 
-        private const string DEFAULT_NAME = "Noobie";
+        private const string DEFAULT_NAME = "Deepak";
         private const string READY_KEY = "IsReady"; // Key for ready property of player.
         private const string GAME_TIME = "GameTime"; // Key for game time property of room.
         private const string LOCK_CURSOR = "LockCursor"; // Key for lock cursor during game.
@@ -581,7 +581,7 @@ namespace PV.Multiplayer
         }
 
         /// <summary>
-        /// Handles updates to the player’s ready status when their properties change.
+        /// Handles updates to the playerï¿½s ready status when their properties change.
         /// </summary>
         public void OnPlayerPropsUpdate(int actorNumber, Hashtable props)
         {
@@ -649,7 +649,7 @@ namespace PV.Multiplayer
         }
 
         /// <summary>
-        /// Removes the player’s UI item from the players list of current room.
+        /// Removes the playerï¿½s UI item from the players list of current room.
         /// </summary>
         private void RemovePlayerItem(int actorNumber)
         {
